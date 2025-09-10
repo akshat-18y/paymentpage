@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My QR Page</title>
+    <!-- We'll use Tailwind CSS for a clean and responsive design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Optional: Add a custom font and background color */
+        body {
+            font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #dedee0;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <!-- The main container for the content, styled like a card -->
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-sm text-center transform transition-all hover:scale-105 duration-300">
+        
+        <!-- Main title -->
+        <h1 class="text-3xl font-extrabold text-gray-900 mb-6">Scan to Pay</h1>
+
+        <!-- QR Code Section -->
+        <div class="mb-6">
+            <!-- IMPORTANT: Replace the 'src' attribute below with the URL of your actual QR code image -->
+            <!-- You can generate one from your UPI app -->
+            <img id="qr-code" 
+                 src="qrrpge.png" 
+                 alt="Payment QR Code" 
+                 class="mx-auto rounded-xl shadow-lg w-full max-w-[300px] border-4 border-indigo-200 p-2">
+        </div>
+        
+        <!-- Personal Details Section -->
+        <div class="mb-6 space-y-2">
+            <!-- Replace 'John Doe' with your name -->
+            <p class="text-2xl font-semibold text-gray-800" id="name-display">Akshat Shukla</p>
+            <!-- Replace 'johndoe@upi' with your UPI ID -->
+            <p class="text-lg text-gray-600 font-medium" id="upi-id-display">7619900542@upi</p>
+        </div>
+
+        <!-- Copy UPI ID Button -->
+        <button id="copy-button" 
+                class="w-full bg-indigo-600 text-white py-3 px-6 rounded-lg font-semibold text-lg hover:bg-indigo-700 transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50 shadow-lg active:scale-95">
+            Copy UPI ID
+        </button>
+
+        <!-- A message box to confirm when the ID is copied -->
+        <div id="copy-message" 
+             class="mt-4 p-3 bg-green-100 text-green-700 rounded-lg text-sm hidden">
+            UPI ID copied to clipboard!
+        </div>
+    </div>
+
+    <script>
+        // Get references to the elements in the page
+        const upiIdElement = document.getElementById('upi-id-display');
+        const copyButton = document.getElementById('copy-button');
+        const copyMessage = document.getElementById('copy-message');
+
+        // Add a click event listener to the button
+        copyButton.addEventListener('click', () => {
+            // Get the text from the UPI ID element
+            const upiId = upiIdElement.textContent.trim();
+
+            // Create a temporary input element to hold the text
+            const tempInput = document.createElement('input');
+            tempInput.value = upiId;
+            document.body.appendChild(tempInput);
+            
+            // Select the text and copy it
+            tempInput.select();
+            document.execCommand('copy');
+            
+            // Remove the temporary input
+            document.body.removeChild(tempInput);
+
+            // Show the success message
+            copyMessage.classList.remove('hidden');
+            
+            // Hide the message after 2 seconds
+            setTimeout(() => {
+                copyMessage.classList.add('hidden');
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
